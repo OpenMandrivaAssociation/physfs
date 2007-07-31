@@ -1,15 +1,17 @@
 %define	name	physfs
 %define	version	1.0.1
 %define	release	%mkrel 1
-%define	lib_name_orig 	lib%{name}
-%define lib_major	1.0
-%define lib_name	%mklibname %{name} %{lib_major}
+
+%define	libname_orig 	lib%{name}
+%define major		1.0
+%define libname		%mklibname %{name} %{major}
+%define develname	%mklibname %{name} -d
  
 Name:		%{name}
 Summary:	A library to provide abstract access to various archives
 Version:	%{version}
 Release:	%{release}
-License:	zlib License 
+License:	zlib
 Group:		System/Libraries
 Source0:	%{name}-%{version}.tar.bz2
 URL:		http://www.icculus.org/physfs/
@@ -23,24 +25,25 @@ It is intended for use in video games.
 The programmer defines a "write directory" on the physical filesystem. 
 No file writing done through the PhysicsFS API can leave that write directory.
 
-%package -n	%{lib_name}
+%package -n	%{libname}
 Summary:	Main library for physfs
 Group:		System/Libraries
-Provides:	%{lib_name_orig} = %{version}-%{release}
+Provides:	%{libname_orig} = %{version}-%{release}
 Provides:	%{name} = %{version}-%{release}
 
-%description -n	%{lib_name}
+%description -n	%{libname}
 This package contains the library needed to run programs dynamically
 linked with physfs
 
-%package -n	%{lib_name}-devel
+%package -n	%{develname}
 Summary:	Headers for developing programs that will use physfs
 Group:		Development/C 
-Requires:	%{lib_name} = %{version} zlib-devel
-Provides:	%{lib_name_orig}-devel = %{version}-%{release}
+Requires:	%{libname} = %{version} zlib-devel
+Provides:	%{libname_orig}-devel = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
+Obsoletes:	%{mklibname physfs 1.0 -d}
 
-%description -n	%{lib_name}-devel
+%description -n	%{develname}
 This package contains the headers that programmers will need to develop
 applications which will use physfs
 
@@ -59,16 +62,16 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{name}.a
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post -n %{lib_name} -p /sbin/ldconfig
-%postun -n %{lib_name} -p /sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
-%files -n %{lib_name}
+%files -n %{libname}
 %defattr(-, root, root)
-%doc CHANGELOG CREDITS INSTALL LICENSE TODO
 %{_libdir}/*.so.*
 
-%files -n %{lib_name}-devel
+%files -n %{develname}
 %defattr(-, root, root)
+%doc CHANGELOG CREDITS LICENSE TODO
 %{_bindir}/*
 %{_includedir}/*
 %{_libdir}/*.la
