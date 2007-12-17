@@ -15,7 +15,6 @@ License:	zlib
 Group:		System/Libraries
 Source0:	%{name}-%{version}.tar.bz2
 URL:		http://www.icculus.org/physfs/
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	ncurses-devel readline-devel zlib-devel
 
 
