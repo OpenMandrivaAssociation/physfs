@@ -1,6 +1,5 @@
 %define	name	physfs
 %define	version	1.0.1
-%define	release	%mkrel 1
 
 %define	libname_orig 	lib%{name}
 %define major		1.0
@@ -10,7 +9,7 @@
 Name:		%{name}
 Summary:	A library to provide abstract access to various archives
 Version:	%{version}
-Release:	%{release}
+Release:	%mkrel 2
 License:	zlib
 Group:		System/Libraries
 Source0:	%{name}-%{version}.tar.bz2
