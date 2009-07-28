@@ -1,21 +1,26 @@
 %define	name	physfs
-%define	version	1.0.1
+%define	version	2.0.0
 
 %define	libname_orig 	lib%{name}
-%define major		1.0
+%define major		2
+%define compat_major	1
 %define libname		%mklibname %{name} %{major}
 %define develname	%mklibname %{name} -d
  
 Name:		%{name}
 Summary:	A library to provide abstract access to various archives
 Version:	%{version}
-Release:	%mkrel 6
+Release:	%mkrel 1
 License:	zlib
 Group:		System/Libraries
-Source0:	%{name}-%{version}.tar.bz2
+Source0:	%{name}-%{version}.tar.gz
+Patch0:		physfs-2.0.0-fix-strict-aliasing.patch
 URL:		http://www.icculus.org/physfs/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires:	ncurses-devel readline-devel zlib-devel
+BuildRequires:	ncurses-devel
+BuildRequires:	readline-devel
+BuildRequires:	zlib-devel
+BuildRequires:	cmake
 
 
 %description
@@ -49,17 +54,26 @@ applications which will use physfs
 %prep
 %setup -q
 
+%patch0 -p1
+
+# Ensure we use system zlib  
+## TODO: do the same for lzma
+rm -rf zlib123
+#rm -rf lzma
+
 %build
-%configure2_5x 
+%cmake
+%make
 
 %install
-rm -rf $RPM_BUILD_ROOT
-%{makeinstall_std}
+rm -rf %{buildroot}
+%makeinstall_std -C build
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{name}.a
+install -d %{buildroot}%{_docdir}%{name}
+install *.txt %{buildroot}%{_docdir}%{name}/
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
@@ -70,12 +84,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %{libname}
 %defattr(-, root, root)
-%{_libdir}/*.so.*
+%{_libdir}/*.so.%{major}*
+%{_libdir}/*.so.%{compat_major}
 
 %files -n %{develname}
 %defattr(-, root, root)
-%doc CHANGELOG CREDITS LICENSE TODO
+%doc %{_docdir}%{name}/*.txt
 %{_bindir}/*
 %{_includedir}/*
-%{_libdir}/*.la
+%{_libdir}/*.a
 %{_libdir}/*.so
