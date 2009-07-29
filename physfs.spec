@@ -10,7 +10,7 @@
 Name:		%{name}
 Summary:	A library to provide abstract access to various archives
 Version:	%{version}
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	zlib
 Group:		System/Libraries
 Source0:	%{name}-%{version}.tar.gz
