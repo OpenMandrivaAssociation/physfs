@@ -65,12 +65,24 @@ rm -rf zlib123
 %cmake
 %make
 
+
 %install
 rm -rf %{buildroot}
+
+# fix 64 bits lib path 
+%ifarch x86_64
+cd build
+sed -i -e 's,lib",lib64",g' cmake_install.cmake
+cd ..
+%endif
+
 %makeinstall_std -C build
+
 
 install -d %{buildroot}%{_docdir}%{name}
 install *.txt %{buildroot}%{_docdir}%{name}/
+
+rm -rf %{buildroot}%{_libdir}/*.a
 
 %clean
 rm -rf %{buildroot}
@@ -91,6 +103,5 @@ rm -rf %{buildroot}
 %defattr(-, root, root)
 %doc %{_docdir}%{name}/*.txt
 %{_bindir}/*
-%{_includedir}/*
-%{_libdir}/*.a
+%{_includedir}/*.h
 %{_libdir}/*.so
