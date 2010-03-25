@@ -1,5 +1,5 @@
 %define	name	physfs
-%define	version	2.0.0
+%define	version	2.0.1
 
 %define	libname_orig 	lib%{name}
 %define major		2
@@ -10,16 +10,17 @@
 Name:		%{name}
 Summary:	A library to provide abstract access to various archives
 Version:	%{version}
-Release:	%mkrel 3
+Release:	%mkrel 1
 License:	zlib
 Group:		System/Libraries
 Source0:	%{name}-%{version}.tar.gz
-Patch0:		physfs-2.0.0-fix-strict-aliasing.patch
+#Patch0:		physfs-2.0.0-fix-strict-aliasing.patch
 URL:		http://www.icculus.org/physfs/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	ncurses-devel
 BuildRequires:	readline-devel
 BuildRequires:	zlib-devel
+BuildRequires:	liblzma-devel
 BuildRequires:	cmake
 
 
@@ -54,15 +55,15 @@ applications which will use physfs
 %prep
 %setup -q
 
-%patch0 -p1
+#%patch0 -p1
 
 # Ensure we use system zlib  
-## TODO: do the same for lzma
+# don't use bundled lzma
 rm -rf zlib123
-#rm -rf lzma
+rm -rf lzma
 
 %build
-%cmake
+%cmake -DPHYSFS_ARCHIVE_7Z=OFF
 %make
 
 
