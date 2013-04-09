@@ -11,6 +11,7 @@ Release:	1
 License:	zlib
 Group:		System/Libraries
 Source0:	http://www.icculus.org/physfs/downloads/%{name}-%{version}.tar.bz2
+Source100:	physfs.rpmlintrc
 Patch0:		physfs-2.0.2-fix-build.patch
 URL:		http://www.icculus.org/physfs/
 BuildRequires:	ncurses-devel
