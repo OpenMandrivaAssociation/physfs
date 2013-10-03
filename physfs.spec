@@ -1,25 +1,23 @@
-%define libname_orig 	lib%{name}
-%define major		2
+%define major	2
 %define compat_major	1
-%define libname		%mklibname %{name} %{major}
-%define develname	%mklibname %{name} -d
+%define libname	%mklibname %{name} %{major}
+%define devname	%mklibname %{name} -d
 
-Name:		physfs
 Summary:	A library to provide abstract access to various archives
+Name:		physfs
 Version:	2.0.3
 Release:	1
 License:	zlib
 Group:		System/Libraries
+Url:		http://www.icculus.org/physfs/
 Source0:	http://www.icculus.org/physfs/downloads/%{name}-%{version}.tar.bz2
 Source100:	physfs.rpmlintrc
 Patch0:		physfs-2.0.2-fix-build.patch
-URL:		http://www.icculus.org/physfs/
-BuildRequires:	ncurses-devel
-BuildRequires:	readline-devel
-BuildRequires:	zlib-devel
-BuildRequires:	liblzma-devel
 BuildRequires:	cmake
-
+BuildRequires:	readline-devel
+BuildRequires:	pkgconfig(liblzma)
+BuildRequires:	pkgconfig(ncurses)
+BuildRequires:	pkgconfig(zlib)
 
 %description
 A library to provide abstract access to various archives. 
@@ -30,21 +28,19 @@ No file writing done through the PhysicsFS API can leave that write directory.
 %package -n	%{libname}
 Summary:	Main library for physfs
 Group:		System/Libraries
-Provides:	%{libname_orig} = %{version}-%{release}
 Provides:	%{name} = %{version}-%{release}
 
 %description -n	%{libname}
 This package contains the library needed to run programs dynamically
 linked with physfs
 
-%package -n	%{develname}
+%package -n	%{devname}
 Summary:	Headers for developing programs that will use physfs
 Group:		Development/C
-Requires:	%{libname} = %{version} zlib-devel
-Provides:	%{libname_orig}-devel = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n	%{develname}
+%description -n	%{devname}
 This package contains the headers that programmers will need to develop
 applications which will use physfs
 
@@ -71,17 +67,16 @@ cd ..
 
 %makeinstall_std -C build
 
-
 install -d %{buildroot}%{_docdir}%{name}
 install *.txt %{buildroot}%{_docdir}%{name}/
 
 rm -rf %{buildroot}%{_libdir}/*.a
 
 %files -n %{libname}
-%{_libdir}/*.so.%{major}*
-%{_libdir}/*.so.%{compat_major}
+%{_libdir}/libphysfs.so.%{major}*
+%{_libdir}/libphysfs.so.%{compat_major}
 
-%files -n %{develname}
+%files -n %{devname}
 %doc %{_docdir}%{name}/*.txt
 %{_bindir}/*
 %{_includedir}/*.h
