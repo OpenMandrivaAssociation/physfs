@@ -7,7 +7,7 @@
 Name:		physfs
 Summary:	A library to provide abstract access to various archives
 Version:	2.0.3
-Release:	1
+Release:	2
 License:	zlib
 Group:		System/Libraries
 Source0:	http://www.icculus.org/physfs/downloads/%{name}-%{version}.tar.bz2
