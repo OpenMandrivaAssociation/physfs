@@ -1,18 +1,17 @@
-%define major	2
+%define major	3
 %define compat_major	1
 %define libname	%mklibname %{name} %{major}
 %define devname	%mklibname %{name} -d
 
 Summary:	A library to provide abstract access to various archives
 Name:		physfs
-Version:	2.0.3
-Release:	9
+Version:	3.0.1
+Release:	1
 License:	zlib
 Group:		System/Libraries
 Url:		http://www.icculus.org/physfs/
 Source0:	http://www.icculus.org/physfs/downloads/%{name}-%{version}.tar.bz2
 Source100:	physfs.rpmlintrc
-Patch0:		physfs-2.0.2-fix-build.patch
 BuildRequires:	cmake
 BuildRequires:	readline-devel
 BuildRequires:	pkgconfig(liblzma)
@@ -81,4 +80,4 @@ rm -rf %{buildroot}%{_libdir}/*.a
 %{_bindir}/*
 %{_includedir}/*.h
 %{_libdir}/*.so
-
+%{_libdir}/pkgconfig/*.pc
