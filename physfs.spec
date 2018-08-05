@@ -45,7 +45,7 @@ applications which will use physfs
 
 %prep
 %setup -q
-%patch0 -p0
+#patch0 -p0
 
 # Ensure we use system zlib  
 # don't use bundled lzma
