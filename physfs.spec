@@ -9,7 +9,7 @@ Version:	3.0.2
 Release:	3
 License:	zlib
 Group:		System/Libraries
-Url:		http://www.icculus.org/physfs/
+Url:		https://www.icculus.org/physfs/
 Source0:	http://www.icculus.org/physfs/downloads/%{name}-%{version}.tar.bz2
 Source100:	physfs.rpmlintrc
 BuildRequires:	cmake
